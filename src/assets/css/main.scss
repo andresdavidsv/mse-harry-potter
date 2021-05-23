@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'HARRP';
+  src: url('../fonts/HARRP.TTF') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+.font-hrp , label , .modal-header{
+  font-family: 'HARRP', sans-serif;
+  color: yellow;
+}
+body , .modal-header, .modal-footer{
+  background-color: #000;
+}
+.close{
+  color:white
+}
+
+.modal-footer{
+  button{
+    background-color: red;
+    font-family: 'HARRP', sans-serif;
+  }
+}
+// Custom
+
+@import './custom.scss';

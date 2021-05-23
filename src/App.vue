@@ -1,32 +1,30 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <LoadLayout v-if="isLoading">
+      <BaseLoading />
+    </LoadLayout>
+    <MainLayout v-else />
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { mapState } from 'vuex'
 
-#nav {
-  padding: 30px;
+import LoadLayout from './layouts/LoadLayout'
+import MainLayout from './layouts/MainLayout'
+import BaseLoading from '@/components/BaseLoading.vue'
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+export default {
+  name: 'App',
+  components: {
+    MainLayout,
+    LoadLayout,
+    BaseLoading
+  },
+  computed: {
+    ...mapState('loading', {
+      isLoading: 'isLoading'
+    })
   }
 }
-</style>
+</script>
