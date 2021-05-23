@@ -85,10 +85,10 @@ export default {
       try {
         let API_URL
         selected === 'staff'
-          ? (API_URL = 'http://hp-api.herokuapp.com/api/characters/staff')
+          ? (API_URL = 'https://hp-api.herokuapp.com/api/characters/staff')
           : selected === 'students'
-            ? (API_URL = 'http://hp-api.herokuapp.com/api/characters/students')
-            : (API_URL = 'http://hp-api.herokuapp.com/api/characters')
+            ? (API_URL = 'https://hp-api.herokuapp.com/api/characters/students')
+            : (API_URL = 'https://hp-api.herokuapp.com/api/characters')
         const res = await fetch(API_URL)
         this.state.characters = await res.json()
         this.state.searchBy = this.state.characters
