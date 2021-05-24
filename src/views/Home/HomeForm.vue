@@ -48,17 +48,20 @@
     <div v-if="this.state.searchBy.length == 0" class="not-found">
       <h3 class="font-hrp">Try again! No results found.</h3>
     </div>
-    <Characters :characters="this.state.searchBy" ></Characters>
+    <BaseLoading v-if="this.state.isLoading" />
+    <Characters :characters="this.state.searchBy"></Characters>
   </div>
 </template>
 
 <script>
 import { reactive } from '@vue/composition-api'
 import Characters from './child/Characters'
+import BaseLoading from '@/components/BaseLoading'
 export default {
   name: 'MainForm',
   components: {
-    Characters
+    Characters,
+    BaseLoading
   },
   setup () {
     const state = reactive({
@@ -73,15 +76,19 @@ export default {
         { text: 'All', value: 'all' },
         { text: 'Staff', value: 'staff' },
         { text: 'Students', value: 'students' }
-      ]
+      ],
+      isLoading: false
     })
     return { state }
   },
   mounted () {
+    this.state.isLoading = true
     this.fetchCharactersData()
+    this.state.isLoading = false
   },
   methods: {
     async fetchCharactersData (selected) {
+      this.state.isLoading = true
       try {
         let API_URL
         selected === 'staff'
@@ -93,36 +100,48 @@ export default {
         this.state.characters = await res.json()
         this.state.searchBy = this.state.characters
         this.loadHouseData(this.state.characters)
+        this.state.isLoading = false
         return this.state.characters
       } catch (error) {
         console.error(error)
+        this.state.isLoading = false
       }
     },
     async loadHouseData (data) {
+      this.state.isLoading = true
       const houses = data.map((c) => {
         return c.house
       })
       this.state.houses = houses.filter((value, index) => {
         return houses.indexOf(value) === index
       })
+      this.state.isLoading = false
     },
     displayCharacterbyHouse () {
+      this.state.isLoading = true
       this.state.searchBy = this.state.characters.filter((e) => {
         return e.house.includes(this.state.filterHouse)
       })
+      this.state.isLoading = false
     },
     displayCharacterbyName (value) {
+      this.state.isLoading = true
       this.state.filterName = value
       this.state.searchBy = this.state.characters.filter((e) => {
         return e.name.toLowerCase().includes(this.state.filterName)
       })
+      this.state.isLoading = false
     },
     reactiveSelect (arg) {
+      this.state.isLoading = true
       this.fetchCharactersData(arg)
       setTimeout(() => {
+        this.state.isLoading = true
         this.displayCharacterbyName(this.state.filterName)
+        this.state.isLoading = true
         this.displayCharacterbyHouse()
-      }, 800)
+      }, 1000)
+      this.state.isLoading = false
     }
   }
 }

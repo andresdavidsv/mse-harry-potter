@@ -2,7 +2,7 @@
 
 ## Project Deployed
 ````
-Visit this URL -> 
+Visit this URL -> https://mse-harry-potter.netlify.app/
 ````
 
 ## Project setup
