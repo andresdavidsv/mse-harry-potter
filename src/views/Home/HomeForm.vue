@@ -57,6 +57,7 @@
 import { reactive } from '@vue/composition-api'
 import Characters from './child/Characters'
 import BaseLoading from '@/components/BaseLoading'
+import { URL, STUDENTSURL, STAFFSURL } from '@/api/apiHP'
 export default {
   name: 'MainForm',
   components: {
@@ -92,10 +93,10 @@ export default {
       try {
         let API_URL
         selected === 'staff'
-          ? (API_URL = 'https://hp-api.herokuapp.com/api/characters/staff')
+          ? API_URL = STAFFSURL
           : selected === 'students'
-            ? (API_URL = 'https://hp-api.herokuapp.com/api/characters/students')
-            : (API_URL = 'https://hp-api.herokuapp.com/api/characters')
+            ? API_URL = STUDENTSURL
+            : API_URL = URL.baseURL
         const res = await fetch(API_URL)
         this.state.characters = await res.json()
         this.state.searchBy = this.state.characters
